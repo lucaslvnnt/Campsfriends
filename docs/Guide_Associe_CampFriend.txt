@@ -1,0 +1,200 @@
+CAMPFRIEND — GUIDE COMPLET (WINDOWS)
+
+Chemin du projet (fourni) :
+C:\Users\Utilisateur\Documents\Campsfriends2
+
+Ce guide explique TOUT, étape par étape, pour quelqu’un qui n’y connaît rien.
+
+====================================================================
+1) CE QUE C’EST
+====================================================================
+CampFriend est un site local pour rencontrer des amis dans un camping.
+On peut :
+- s’inscrire avec un email ou un téléphone
+- swiper les profils
+- envoyer des demandes d’ami
+- discuter en temps réel
+- gérer les signalements via un panel admin
+
+====================================================================
+2) CE QU’IL FAUT INSTALLER AVANT (UNE SEULE FOIS)
+====================================================================
+Tu dois installer 4 choses sur ton PC :
+1. Node.js (version LTS)
+2. MongoDB Community (base de données)
+3. Un navigateur (Chrome conseillé)
+4. (Optionnel) Git si tu veux cloner le projet
+
+Conseil simple : si tu as un doute, installe Node.js + MongoDB, c’est obligatoire.
+
+====================================================================
+3) OUVRIR POWERSHELL
+====================================================================
+1. Appuie sur la touche Windows
+2. Tape "PowerShell"
+3. Clique sur "Windows PowerShell"
+
+====================================================================
+4) ALLER DANS LE DOSSIER DU PROJET
+====================================================================
+Dans PowerShell, copie/colle :
+cd "C:\Users\Utilisateur\Documents\Campsfriends2"
+
+Tu dois être dans le dossier du projet avant de lancer quoi que ce soit.
+
+====================================================================
+5) VERIFIER LES FICHIERS .ENV (IMPORTANT)
+====================================================================
+Il y a 2 fichiers .env :
+
+A) server\.env
+Il doit contenir quelque chose comme :
+MONGODB_URI=mongodb://127.0.0.1:27017/campfriend
+JWT_SECRET=dev_secret_change_me
+CLIENT_ORIGIN=http://localhost:5173
+ADMIN_EMAIL=tonemail@example.com
+PORT=5001
+
+B) client\.env
+Il doit contenir :
+VITE_API_URL=http://localhost:5001/api
+VITE_SERVER_URL=http://localhost:5001
+VITE_SOCKET_URL=http://localhost:5001
+
+Si les ports ne sont pas identiques, ça ne marchera pas.
+
+====================================================================
+6) DEMARRER MONGODB (LA BASE DE DONNEES)
+====================================================================
+Deux cas possibles :
+
+CAS 1 : MongoDB installé comme service Windows
+Dans PowerShell, tape :
+net start MongoDB
+
+CAS 2 : MongoDB pas en service
+Dans PowerShell, tape :
+mkdir C:\data\db -Force
+"C:\Program Files\MongoDB\Server\7.0\bin\mongod.exe" --dbpath C:\data\db
+
+Garde cette fenêtre ouverte, elle DOIT rester ouverte pendant l’utilisation.
+
+====================================================================
+7) LANCER LE SERVEUR (BACKEND)
+====================================================================
+Ouvre un NOUVEAU PowerShell (laisse MongoDB ouvert).
+Puis :
+
+cd "C:\Users\Utilisateur\Documents\Campsfriends2\server"
+npm install
+npm run dev
+
+Si tout va bien, tu verras un message :
+"MongoDB connected"
+
+Garde ce terminal ouvert.
+
+====================================================================
+8) LANCER LE SITE (FRONTEND)
+====================================================================
+Ouvre un AUTRE PowerShell (un 3e terminal).
+Puis :
+
+cd "C:\Users\Utilisateur\Documents\Campsfriends2\client"
+npm install
+npm run dev
+
+Ensuite ouvre ton navigateur sur :
+http://localhost:5173
+
+====================================================================
+9) UTILISATION BASIQUE DU SITE
+====================================================================
+Inscription :
+- email ou téléphone
+- mot de passe
+- prénom, âge, camping, bio
+- photo (upload ou URL)
+
+Découvrir :
+- swipe gauche = passer
+- swipe droite = j’aime
+- bouton “Ajouter en ami” = demande d’ami
+
+Messages :
+- une fois matché tu peux discuter
+- bouton “Appeler” = envoie demande d’appel
+- bouton “Jeux” = envoie demande de jeu
+
+====================================================================
+10) PASS PREMIUM (1,99 €/mois)
+====================================================================
+En local, le paiement est simulé.
+Ça te permet :
+- changer les couleurs du profil
+- ajouter des cadres dessinés autour du profil
+- effet spécial sur la photo
+- fond personnalisé pour les messages
+
+Pour activer :
+Réglages -> Pass Premium -> Activer
+
+====================================================================
+11) PANEL ADMIN (IMPORTANT)
+====================================================================
+Pour être admin :
+1. Mets ton email dans server\.env à la ligne ADMIN_EMAIL
+2. Redémarre le serveur
+3. Crée un compte avec cet email exact (pas le téléphone)
+4. Connecte-toi
+5. Va dans Réglages -> Ouvrir le panel admin
+   ou direct : http://localhost:5173/admin
+
+Le panel admin affiche :
+- tous les signalements
+- tous les comptes créés (email / téléphone / rôle / premium)
+
+ATTENTION : les mots de passe ne sont jamais visibles
+car ils sont chiffrés (sécurité obligatoire).
+
+====================================================================
+12) PROBLEMES FREQUENTS (ET SOLUTIONS)
+====================================================================
+Erreur “Serveur injoignable” :
+- vérifie que le serveur tourne
+- vérifie que client\.env pointe sur le bon port
+
+Erreur “Port déjà utilisé” :
+- change PORT dans server\.env
+- mets la même valeur dans client\.env
+
+Photo qui ne s’affiche pas :
+- utilise JPG ou PNG
+- attends la fin de l’upload
+
+Pas de panel admin :
+- tu n’es pas connecté avec l’email ADMIN_EMAIL
+
+====================================================================
+13) ARRETER L’APPLICATION
+====================================================================
+Dans chaque terminal, appuie sur :
+Ctrl + C
+
+====================================================================
+14) RESUME DES COMMANDES IMPORTANTES
+====================================================================
+Demarrer MongoDB :
+net start MongoDB
+
+Backend :
+cd "C:\Users\Utilisateur\Documents\Campsfriends2\server"
+npm run dev
+
+Frontend :
+cd "C:\Users\Utilisateur\Documents\Campsfriends2\client"
+npm run dev
+
+====================================================================
+FIN
+====================================================================
